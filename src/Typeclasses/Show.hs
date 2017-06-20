@@ -36,8 +36,8 @@ dShowPair d1 d2 = DictShow
 dShowList :: DictShow a -> DictShow [a]
 dShowList d = DictShow
     { dshow = \xs -> "[" ++ showList xs ++ "]" }
-        where showList [] = ""
-              showList [x] = dshow d x
+        where showList []     = ""
+              showList [x]    = dshow d x
               showList (x:xs) = dshow d x ++ "," ++ showList xs
 
 dShowUnit :: DictShow a -> DictShow ()
