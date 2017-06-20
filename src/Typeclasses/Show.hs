@@ -8,9 +8,19 @@ class MyShow a where
 instance MyShow Bool where
     myshow b = if b then "True" else "False"
 
+-- Usage example:
+--     > Prelude Typeclasses.Show> myshow (True,False)
+--     "(True,False)"
 instance (MyShow a, MyShow b) => MyShow (a,b) where
     myshow (x,y) = "(" ++ myshow x ++ "," ++ myshow y ++ ")"
 
+-- Usage examples:
+--     > myshow ([]::[Bool])
+--     "[]"
+--
+--     > myshow [True,True,False]
+--     "[True, True, False]"
+--
 instance MyShow a => MyShow [a] where
     myshow xs = "[" ++ showList xs ++ "]"
         --where showList [] = ""
