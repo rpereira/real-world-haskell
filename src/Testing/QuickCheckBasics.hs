@@ -44,6 +44,10 @@ prop_insert_asc :: (Show a, Ord a, Arbitrary a) => a -> Property
 prop_insert_asc x = forAll orderedList $
     \xs -> orderedAsc (insert' x xs)
 
+-- quickCheck (prop_rev_unit :: Integer -> Bool)
+prop_rev_unit :: Eq a => a -> Bool
+prop_rev_unit x = reverse [x] == [x]
+
 -- quickCheck (prop_rev :: [Integer] -> [Integer] -> Bool)
 prop_rev :: Ord a => [a] -> [a] -> Bool
 prop_rev xs ys = reverse (xs ++ ys) == reverse ys ++ reverse xs
