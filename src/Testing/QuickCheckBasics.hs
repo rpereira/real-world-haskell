@@ -56,6 +56,10 @@ prop_rev xs ys = reverse (xs ++ ys) == reverse ys ++ reverse xs
 prop_rev_rev :: Ord a => [a] -> Bool
 prop_rev_rev xs = reverse (reverse xs) == xs
 
+-- quickCheck (prop_max_len :: Integer -> Integer -> Property)
+prop_max_len :: Ord a => a -> a -> Property
+prop_max_len x y = x <= y ==> max x y == y
+
 --------------------------------------------------------------------------------
 --  Helpers
 
