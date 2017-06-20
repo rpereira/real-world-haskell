@@ -15,7 +15,6 @@ dEqList d = MkEq eqlist
           eqlist (x:xs) (y:ys) = (==) d x y && eqlist xs ys
           eqlist _ _ = False
 
--- TODO dEqPair
--- dEqPair :: Eq a -> Eq b -> Eq (a,b)
--- dEqPair d1 d2 = MkEq eqpair
---     where eqpair () () = True
+dEqPair :: (Eq a, Eq b) -> Eq (a,b)
+dEqPair (Eq eqA, Eq eqB) =
+    MkEq (\(x,y) (x',y') -> eqA x x' && eqB y y')
