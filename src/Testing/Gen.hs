@@ -3,11 +3,16 @@ module Testing.Gen where
 import Control.Monad   (filterM, replicateM)
 import Test.QuickCheck
 
+-- | Generates one of the given values. The input list must be non-empty.
+elements' :: [a] -> Gen a
+elements' [] = error "elements' cannot be used with empty list"
+elements' xs = (xs !!) `fmap` choose (0, length xs - 1)
+
 -- | Generates a list of random length. The maximum length depends on the size
 -- parameter.
 --
 -- Usage example:
---     > sample (listOf' $ elements "aeiou")
+--     > sample (listOf' $ elements' "aeiou")
 --     ""
 --     ""
 --     "i"
@@ -28,7 +33,7 @@ listOf' gen = sized $ \n -> do
 -- the size parameter.
 --
 -- Usage example:
---     > sample (listOf'' $ elements "aeiou")
+--     > sample (listOf'' $ elements' "aeiou")
 --     "i"
 --     "ua"
 --     "aoui"
@@ -48,7 +53,7 @@ listOf'' gen = sized $ \n -> do
 -- | Generates a list of the given length.
 --
 -- Usage example:
---     > sample (vectorOf' 5 $ elements "aeiou")
+--     > sample (vectorOf' 5 $ elements' "aeiou")
 --     "aaoeu"
 --     "eaiiu"
 --     "aeaaa"
@@ -66,7 +71,7 @@ vectorOf' = replicateM
 -- | Generates an infinite list.
 --
 -- Usage example:
---     > sample (infiniteListOf' $ elements "aeiou")
+--     > sample (infiniteListOf' $ elements' "aeiou")
 --     uieauaaeioeioieooeaioiaooueoiuoe...
 infiniteListOf' :: Gen a -> Gen [a]
 infiniteListOf' gen = sequence (repeat gen)
